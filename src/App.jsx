@@ -77,8 +77,8 @@ const App = () => {
          <ProtectedRoute path="/profile/:id" component={Profilepage}/>
          <ProtectedRoute path="/profiles/:id" component={Profilepages}/>
          <ProtectedRoute path="/adminpanel"  component={AdminPanel}/>               
-         <ProtectedRoute path="/adminapproved"  component={Adminpost}/>
-         <ProtectedRoute path="/adminpost"  component={Adminapproved}/>        
+         <ProtectedRoute path="/adminapproved"  component={Adminapproved}/>
+         <ProtectedRoute path="/adminpost"  component={Adminpost}/>        
          <ProtectedRoute path="/myposts"  component={Yourpost}/>    
          <ProtectedRoute path="/findposts"  component={FindPost}/>
          <ProtectedRoute path="/upcoming"  component={Upcoming}/>          

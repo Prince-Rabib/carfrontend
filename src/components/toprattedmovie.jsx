@@ -9,11 +9,13 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import {host} from '../host';
+import Data from "../Views/cars.json"
 const useStyles = makeStyles((theme) =>({
     container:{
         marginBottom:theme.spacing(2),
         marginTop:theme.spacing(1),
-        display:'flex',       
+        display:'flex', 
+        justifyContent:'space-between'      
      },
      media:{
          
@@ -74,7 +76,7 @@ const MediaTv = () => {
 
    useEffect(() => {
           
-        getrequest();
+        
         
    }, [])
 
@@ -88,23 +90,23 @@ const MediaTv = () => {
                <PlayCircleOutlineIcon/>
             </div>
             <div>
-                <Typography gutterBottom variant="h5" >Top Ratted Movies</Typography>
+                <Typography gutterBottom variant="h5">Top Ratted Movies</Typography>
             </div>
         
         </div>
-        {(loading)? <h1 className={classes.setup}>  </h1> :trend.map(result => {
+        {(loading)? <h1 className={classes.setup}>  </h1> :Data.map(result => {
             return ( <Grid item md={12} xs={12} sm={12}>
-            <Card className={classes.container} onClick={()=> handleRoute((result.id),("movie"))}>
+            <Card className={classes.container} >
                 <CardActionArea className={classes.poster}>
                     <CardMedia className={classes.media}
-                    style={{height:10,width:100}}
-                    image={"https://image.tmdb.org/t/p/original"+result.poster_path}
+                    style={{height:10,width:200}}
+                    image={result.image}
                     title = {result.original_title}
                      />                                  
                 </CardActionArea>
                 <CardActionArea >                   
                   <CardContent className={classes.numberoflines}>
-                      <Typography gutterBottom variant="h6">{result.original_title}</Typography>
+                      <Typography gutterBottom variant="h6">{result.car}</Typography>
                   </CardContent>              
                 </CardActionArea>
             </Card>

@@ -206,12 +206,10 @@ const useStyles = makeStyles((theme) =>({
         start:{
         minWidth: '100%',
         display: "flex",
-        justifyContent: "flex-end"
+        justifyContent: "space-between",
+        marginBottom:theme.spacing(2)
         },
-        begin:{
-          minWidth: '100%',
-          display: "flex",
-          },
+
           input:{
             marginTop: theme.spacing(1)
           }
@@ -398,8 +396,6 @@ const Cover = () => {
       <Button variant="contained" color="primary" onClick={uploadFile}>
   Upload Now
 </Button>
-        </div>
-        <div className={classes.begin}>
         <input
           className={classes.input}
         type="file"

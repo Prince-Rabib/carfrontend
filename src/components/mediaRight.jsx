@@ -9,6 +9,8 @@ import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import Data from "../Views/cars.json"
+
 import {host} from '../host';
 const useStyles = makeStyles((theme) =>({
     container:{
@@ -89,23 +91,23 @@ const MediaRight = () => {
                <PlayCircleOutlineIcon/>
             </div>
             <div>
-                <Typography gutterBottom variant="h5" >Now Playing</Typography>
+                <Typography gutterBottom variant="h5" >Top Ratted Car</Typography>
             </div>
         
         </div>
-        {(loading)? <h1 className={classes.setup}>  </h1> :trend.map(result => {
+        {(loading)? <h1 className={classes.setup}>  </h1> :Data.map(result => {
             return ( <Grid item md={12} xs={12} sm={12}>
             <Card className={classes.container} onClick={()=> handleRoute((result.id),("movie"))}>
                 <CardActionArea className={classes.poster}>
                     <CardMedia className={classes.media}
-                    style={{height:10,width:100}}
-                    image={"https://image.tmdb.org/t/p/original"+result.poster_path}
+                    style={{height:10,width:200}}
+                    image={result.image}
                     title = {result.original_title}
                      />                                  
                 </CardActionArea>
                 <CardActionArea >                   
                   <CardContent className={classes.numberoflines}>
-                      <Typography gutterBottom variant="h6">{result.original_title}</Typography>
+                      <Typography gutterBottom variant="h6">{result.car}</Typography>
                   </CardContent>              
                 </CardActionArea>
             </Card>

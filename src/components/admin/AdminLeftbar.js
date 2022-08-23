@@ -6,6 +6,8 @@ import axios from 'axios';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
 import {host} from '../../host';
+import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 const useStyles = makeStyles((theme) =>({
           container:{
@@ -98,11 +100,11 @@ const AdminLeftbar = () => {
              <Typography className={classes.text} onClick={()=> handleRoute("adminpanel")}>All Users</Typography>            
           </div>
           <div className={classes.item}>
-             <AllInboxIcon className={classes.icon} onClick={()=> handleRoute("adminpost")} />
+             <HourglassEmptyIcon className={classes.icon} onClick={()=> handleRoute("adminpost")} />
              <Typography className={classes.text} onClick={()=> handleRoute("adminpost")}>Pending Cars</Typography>            
           </div> 
           <div className={classes.item}>
-             <AllInboxIcon className={classes.icon} onClick={()=> handleRoute("adminapproved")} />
+             <CheckCircleOutlineIcon className={classes.icon} onClick={()=> handleRoute("adminapproved")} />
              <Typography className={classes.text} onClick={()=> handleRoute("adminapproved")}>Approved Cars</Typography>            
           </div>           
        </Container>

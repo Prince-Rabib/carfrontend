@@ -102,7 +102,7 @@ const Posts =()=>{
                 "x-auth-token": localStorage.getItem("authToken")
             }
         }
-        const data = await axios.get(host+ "/api/posts",config);
+        const data = await axios.get(host+ "/api/posts/pending",config);
         
         console.log("All Posts" +data)
         if(data.data){
@@ -153,7 +153,7 @@ const Posts =()=>{
                 "carstatus":"true",
                 "id":Approve
               },config);
-
+              setCheck(!check);
 
             } catch(error) {
 
@@ -221,12 +221,12 @@ const Posts =()=>{
                       <TableHead>
                         <TableRow>
                           <TableCell>Name</TableCell>
-                          <TableCell align="center">Post User ID</TableCell>
-                          <TableCell align="center">Posted text</TableCell>
-                          <TableCell align="center">Post Title</TableCell>                          
-                          <TableCell align="center">Post Media</TableCell>
-                          <TableCell align="center">Total Likes</TableCell>
-                          <TableCell align="center">Total Comments</TableCell>                         
+                          <TableCell align="center">Car</TableCell>
+                          <TableCell align="center">Phone</TableCell>
+                          <TableCell align="center">Location</TableCell>                          
+                          <TableCell align="center">Car Picture</TableCell>
+                          <TableCell align="center">Status</TableCell>
+                          <TableCell align="center">Price</TableCell>                         
                           <TableCell align="center">Approve</TableCell>
                           <TableCell align="center">Remove</TableCell>
 
@@ -239,14 +239,14 @@ const Posts =()=>{
                             <TableCell component="th" scope="row">
                              {row.name}
                             </TableCell>
-                            <TableCell align="center">{row.user}</TableCell>
-                            <TableCell align="center">{row.text}</TableCell>
-                             <TableCell align="center">{row.shows}</TableCell> 
-                             <TableCell align="center"><img src={"https://image.tmdb.org/t/p/original"+row.image} style={{width:400}} alt={row.shows} /></TableCell>
-                             <TableCell align="center">{row.likes.length}</TableCell>
-                             <TableCell align="center">{row.comments.length}</TableCell>                                                        
-                             {(row.carstatus == "false")? <TableCell align="center"><Button variant="contained"  onClick={()=> approveid(row._id)}>Approve</Button></TableCell>
-                             :<TableCell align="center"><Button variant="contained" color="primary">Approved</Button></TableCell>}  
+                            <TableCell align="center">{row.car}</TableCell>
+                            <TableCell align="center">{row.phone}</TableCell>
+                             <TableCell align="center">{row.location}</TableCell> 
+                             <TableCell align="center"><img src={row.image} style={{width:400}} alt={row.shows} /></TableCell>
+                             <TableCell align="center">{row.text}</TableCell>
+                             <TableCell align="center">{row.price} TK</TableCell>                                                        
+                             <TableCell align="center"><Button variant="contained"  onClick={()=> approveid(row._id)}>Approve</Button></TableCell>
+                             
                              <TableCell align="center"><Button variant="contained" color="secondary"onClick={()=> deleteid(row._id)}>Delete</Button></TableCell>    
                           </TableRow>
                         ))}

@@ -10,9 +10,9 @@ import Profile from '../components/Profile/profiles';
 
 const useStyles = makeStyles((theme) =>({
       right:{
-          [theme.breakpoints.down("sm")]:{
+          [theme.breakpoints.down("lg")]:{
              display: "none",
-          }
+          },
       },
       up:{
          marginTop :theme.spacing(7),
@@ -33,10 +33,10 @@ const Detailpage = () => {
            <Grid item sm={2} >
            <Leftbar/>
            </Grid>
-           <Grid item sm={7} xs={10} className={classes.up}>
+           <Grid item sm={7} md={10} xs={10} className={classes.up}>
               <Profile/>
            </Grid>
-           <Grid item sm={3} className={classes.right}>
+           <Grid item md={3}  className={classes.right}>
             <Rightbar/>  
            </Grid>
         </Grid>

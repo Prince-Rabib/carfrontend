@@ -28,6 +28,15 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import {host} from '../host';
 import moment from "moment";
 
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject
+} from 'firebase/storage';
+import { storage } from '../Firebase/firebase';
+import { v4 } from 'uuid';
+
 const useStyles = makeStyles((theme) =>({
     container:{
         
@@ -184,6 +193,15 @@ const useStyles = makeStyles((theme) =>({
       password:{
         marginTop: theme.spacing(3)
       },
+      start:{
+        minWidth: '100%',
+        display: "flex",
+        justifyContent: "center",
+        marginTop:theme.spacing(3)
+        },
+        input:{
+          marginTop: theme.spacing(1)
+        }
 }))
 
 const Post = () => {
@@ -213,7 +231,22 @@ const Post = () => {
    const [Phone, setPhone] = useState("");
    const [Price, setPrice] = useState("");
 
+   const [imageUpload, setImageUpload] = useState('');
 
+   const [imageInfo, setImageInfo] = useState([]);
+ 
+   const uploadFile = () => {
+     if (imageUpload == null) return;
+     const dynamicImageName = `carReselling/${imageUpload.name + v4()}`;
+     const imageRef = ref(storage, dynamicImageName);
+     uploadBytes(imageRef, imageUpload).then((snapshot) => {
+       getDownloadURL(snapshot.ref).then((url) => {
+         // dispatch(formActions.addImageInfoFn({url: url, fileName: dynamicImageName}));
+         setImageInfo({url: url, fileName: dynamicImageName});
+         console.log(url);
+       });
+     });
+   };
 
     const toggleCardContent = (result) => {
       
@@ -296,11 +329,12 @@ const Post = () => {
               phone:Phone,
               price:Price,
               carstatus:'false',
-              image: Details.image,
-              shows:Details.name
+              image: imageInfo.url,
+              shows:imageInfo.fileName
              },config);
             
             setChange(!change);
+            handleClickOpen();
             exampleInput.current.value = " "
            
             
@@ -310,7 +344,7 @@ const Post = () => {
    }
 
    useEffect(async(e) => {
-     getrequest();
+    
     let config = {
         headers:{
             "content-Type":"application/json"
@@ -323,7 +357,7 @@ const Post = () => {
                 "x-auth-token": localStorage.getItem("authToken")
             }
         }
-        const data = await axios.get(host+"/api/posts",config);
+        const data = await axios.get(host+"/api/posts/approved",config);
         const auth = await axios.get(host+"/api/auth",config);
         
 
@@ -355,19 +389,11 @@ const Post = () => {
    let count = 0;
    //////////////////////////////////////////////////////////////////////
   const [open, setOpen] = React.useState(false);
-  const [scroll, setScroll] = React.useState('paper');
 
-  const handleClickOpen = (scrollType) => () => {
-    setOpen(true);
-    setScroll(scrollType);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const descriptionElementRef = React.useRef(null);
   React.useEffect(() => {
+    console.log('Image Data'+  imageInfo)
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
@@ -376,92 +402,19 @@ const Post = () => {
     }
   }, [open]);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-
-
-       const getdetails = async(id,type)=>{
-        
-             
-          
-             if(type == "movie"){
-                 
-                const Id = id;
-                    
-                const data = await axios.get("https://api.themoviedb.org/3/movie/"+Id+"?api_key=c92ecd56753067461e71f400f32022cf&language=en-US");
-                handleClose();
-                console.log(data.data)
-                setDetails({
-                  name: data.data.original_title,
-                  image: data.data.backdrop_path
-                })
-                            
-
-             }else{
-                const Id = id;
-                    
-                const data = await axios.get("https://api.themoviedb.org/3/tv/"+Id+"?api_key=c92ecd56753067461e71f400f32022cf&language=en-US");
-                handleClose();
-                setDetails({
-                  name: data.data.original_name,
-                  image: data.data.backdrop_path
-                })
-                           
-                console.log(data.data)
-  
-
-             }
-    }
-
-
-   const getrequest = async()=>{
-        
-         
-          setLoading(true);
-          
-          
-
-          (search ==null || search == "")? baseUrl="https://api.themoviedb.org/3/trending/all/day": baseUrl = "https://api.themoviedb.org/3/search/multi"
-
-          const get =  await axios.get(baseUrl, {
-              params:{
-                api_key:"c92ecd56753067461e71f400f32022cf",
-                language:"en-US",
-                page:1,
-                include_adult:false,
-                query: search
-              }
-          })
-          const result = get.data.results;
-          console.log(get);
-          
-          setTrend(result);
-          setLoading(false);
-
-         }
-
-
-
-
-   const checkData =()=>{
-      console.log("checkDetails: "+ Details.name);
-   }
-
-   const indexOfLastPost = currentPage * postsPerPage;
-   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-   const currentPosts = trend.slice(indexOfFirstPost, indexOfLastPost);
-
-   console.log(search);
-   const changePage = ()=>{
-         
-    
-    window.scroll(0,0);
-}
 
   const card = (
 
-       (Details.length == 0)?
-           (<Card onClick={handleClickOpen('paper')}>
+       (imageInfo.length == 0)?
+           (<Card >
       <CardActionArea>
         
         <CardMedia
@@ -476,7 +429,7 @@ const Post = () => {
       </CardActionArea>
 
     </Card>):(
-      <Card onClick={handleClickOpen('paper')}>
+      <Card >
       <CardActionArea>
         
         <CardMedia
@@ -484,7 +437,7 @@ const Post = () => {
           alt="Pick your Movie/Tv Show"
           height="400"
           width ="2"
-          image={"https://image.tmdb.org/t/p/original"+Details.image}
+          image={imageInfo.url}
           title= {Details.name}
         />
 
@@ -503,75 +456,30 @@ const Post = () => {
 
    return (
        <>
+             
       <div>
-        <Dialog
-        open={open}
-        onClose={handleClose}
-        scroll={scroll}
-        aria-labelledby="scroll-dialog-title"
-        aria-describedby="scroll-dialog-description"
-        >
-            
-             <div className={classes.box}>         
-      <div className={classes.root1}>
-      <TextField
-          id="outlined-full-width"
-          label="Movies & Tv Shows"
-          className={classes.textField}
-          placeholder="Search"
-          fullWidth
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
-          onChange={
-              (e)=> {setSearch(e.target.value)
-              changePage();
-            }
-        }
-        />
-      </div>
-    <Grid container spacing={2} className={classes.setup}>
-        {(loading)? <div className={classes.loading}>
-      <LinearProgress />
-      <LinearProgress color="secondary" />
-       </div> :trend.map(result => {
-            return ( <Grid key={result.id} item md={6} xs={6} sm={6}>
-             <Card className={classes.Container} onClick={()=> getdetails((result.id),(result.media_type))} >
-                <CardActionArea>
-                    <CardMedia className={classes.Media}
-                    image={"https://image.tmdb.org/t/p/original"+result.poster_path}
-                    title = {result.original_title}
-                     />                       
-                  <CardContent className={classes.numberoflines}>
-                      <Typography gutterBottom variant="h5">{(result.media_type=="tv") ? result.name: result.original_title}</Typography>
-                      <Typography variant="body2" >{result.overview}</Typography>
-                  </CardContent>              
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="Primary">Like</Button>
-                    <Button size="small" color="Primary">Share</Button>
-                </CardActions>
-            </Card>
-            
-     
-            </Grid>)
-        })}
-          
-        
-    </Grid>
-              </div> 
 
-         </Dialog>
       </div>   
-       
-        
-
          {card}
-
-    
         <form  noValidate autoComplete="off" onSubmit={handleSubmit}>
+        <div className={classes.start}>
+{/* Photo Upload feature */}
+
+          <input
+          className={classes.input}
+        type="file"
+        onChange={(event) => {
+        setImageUpload(event.target.files[0]);
+          
+        }}
+        
+      />
+      
+      <Button variant="contained" color="primary" onClick={uploadFile}>
+  Upload Now
+</Button>
+{/* Photo Upload feature */}
+        </div>
           <div className={classes.postMargin}>
           <TextField
                   
@@ -676,15 +584,15 @@ const Post = () => {
                     </CardActionArea>
                      <CardActionArea >
                     <CardMedia className={classes.media}
-                          image={"https://image.tmdb.org/t/p/original"+result.image}
-                          title = {result.shows}
+                          image={result.image}
+                         
                           />  
                      </CardActionArea>
 
                                        
                    <CardActionArea>                      
                      <CardContent>             
-                    <Typography variant="h5" className={classes.Status}>{result.shows}</Typography>
+                    <Typography variant="h5" className={classes.Status}></Typography>
                     </CardContent>
                     </CardActionArea>
                    <CardActionArea>
@@ -821,6 +729,26 @@ const Post = () => {
            })}
        </Grid>
         {console.log(count)}
+        <div>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Thank You for doing a post"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+           Please kindly wait for the admin approval. As soon as your post gets verified, it will be on the air.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
        </>
    )
 };

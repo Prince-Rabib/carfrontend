@@ -13,6 +13,7 @@ import {host} from '../host';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import MovieFilterIcon from '@material-ui/icons/MovieFilter';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
+import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 
 const useStyles = makeStyles((theme) =>({
         Toolbar:{
@@ -174,7 +175,7 @@ const Navbar = () => {
              <EmojiPeopleIcon onClick={()=>handleRouteof('search')}/>             
              </Badge >
             <Badge color="secondary" className={classes.badge} onClick={()=>handleRouteof('myposts')}>
-             <AllInboxIcon onClick={()=>handleRouteof('myposts')}/>             
+             <EmojiTransportationIcon onClick={()=>handleRouteof('myposts')}/>             
              </Badge >             
             <Badge color="secondary" className={classes.badge} onClick={()=>handleRouteof('findposts')}>
              <MovieFilterIcon onClick={()=>handleRouteof('findposts')}/>             

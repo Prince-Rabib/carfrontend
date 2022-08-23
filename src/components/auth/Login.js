@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) =>({
         display:'flex',
         flexDirection: 'column',
         textAlign:'center',
-        backgroundImage:`url(${"https://lh5.googleusercontent.com/oDUgUwudwBlIQ3WSyBE3gZ58_tqhKTDBkic65snFp2x5ZKamuzmyfG-WqYI8AC5vl1iu4RAZhW7JdwnCdyW0lA5RNyCbA5XjW6dBVcHw1hPbYZ1yGX82YIH2pWi4JdgFY38VPPd4"})`,
+        backgroundImage:`url(${"https://cdn4.vectorstock.com/i/1000x1000/15/88/dark-car-with-headlight-vector-9761588.jpg"})`,
         justifyContent:'center',
         backdropFilter: "blur(5px)",
      },

@@ -12,6 +12,9 @@ import FindInPageIcon from '@material-ui/icons/FindInPage';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
+
 const useStyles = makeStyles((theme) =>({
           container:{
              position:"sticky",
@@ -128,7 +131,7 @@ const Leftbar = () => {
           <div className={classes.item}>
 
              
-             <Home className={classes.icon} onClick={()=> homeRoute("/")}/>
+             <DriveEtaIcon className={classes.icon} onClick={()=> homeRoute("/")}/>
              <Typography className={classes.text} onClick={()=> homeRoute("/")}>Homepage</Typography>
                        
           </div>
@@ -143,7 +146,7 @@ const Leftbar = () => {
                     <div className={classes.item}>
 
              
-             <PostAddIcon className={classes.icon} onClick={()=> handleRoute("myposts")}/>
+             <EmojiTransportationIcon className={classes.icon} onClick={()=> handleRoute("myposts")}/>
              <Typography className={classes.text} onClick={()=> handleRoute("myposts")}>My Posts</Typography>
                        
           </div>
