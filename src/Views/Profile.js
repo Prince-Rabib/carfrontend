@@ -36,9 +36,7 @@ const Detailpage = () => {
            <Grid item sm={7} md={10} xs={10} className={classes.up}>
               <Profile/>
            </Grid>
-           <Grid item md={3}  className={classes.right}>
-            <Rightbar/>  
-           </Grid>
+
         </Grid>
        
       </div>

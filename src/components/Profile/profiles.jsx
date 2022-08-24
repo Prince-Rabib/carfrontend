@@ -48,10 +48,12 @@ const labels = {
 
 const useStyles = makeStyles((theme) =>({
     root: {
+    marginTop:theme.spacing(4),
     width: '100%',
     maxWidth: 800,
     backgroundColor: theme.palette.background.paper,
     display:'flex',
+    flexDirection:'column',
     marginLeft:theme.spacing(5),
     [theme.breakpoints.down("xs")]:{
      
@@ -60,7 +62,6 @@ const useStyles = makeStyles((theme) =>({
 
       root2: {
     width: '100%',
-    maxWidth: 1050,
     backgroundColor: theme.palette.background.paper,
     display:'flex',
     justifyContent:'space-between',
@@ -71,7 +72,6 @@ const useStyles = makeStyles((theme) =>({
   },
     container:{
         marginBottom:theme.spacing(5),
-        marginTop:theme.spacing(2),
         height:'100%',
         display:'flex',    
      },
@@ -101,7 +101,8 @@ const useStyles = makeStyles((theme) =>({
         marginTop:theme.spacing(5),
      },
      numberoflines:{
-          WebkitLineClamp:1
+        display:'flex',
+        justifyContent:'left'
      },
        purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
@@ -120,12 +121,22 @@ const useStyles = makeStyles((theme) =>({
       marginTop:theme.spacing(5)
   },
   profileBox:{
-      width:500
+      width:500,
   },
+    propic:{
+        marginTop:theme.spacing(7),
+        
+    },
+
   biodataname:{
       marginBottom:theme.spacing(2)
   },
-  buttonmargin:theme.spacing(1)
+  buttonmargin:theme.spacing(1),
+  texting:{
+    textAlign: "left",
+    marginLeft:theme.spacing(2)
+  },
+
      
 }))
 export default function Profiles() {
@@ -276,17 +287,18 @@ export default function Profiles() {
                             <Button classname={classes.buttonmargin} color="Secondary"  variant="contained" onClick={()=>deletewatchlist(result._id)}>Remove</Button>
                             <CardActionArea>
                                 <CardMedia className={classes.Media}
+                                height="200"
+                                width ="50"
                                 image={result.image}
                                 title = {result.title}
                                 />                       
-                            <CardContent className={classes.numberoflines}>
-                                <Typography gutterBottom variant="h5">{result.title}</Typography>
-                                
-                            </CardContent>              
+          
                             </CardActionArea>
 
                             <CardActionArea className={classes.ratting}>
                             <div className={classes.root}>
+                            <Typography  gutterBottom variant="h5" className={classes.texting} >{result.title}</Typography>
+                                <CardContent className={classes.numberoflines}>     
                                 <Rating
                                 name="hover-feedback"
                                 value={result.ratting}
@@ -294,6 +306,7 @@ export default function Profiles() {
                                 />
                                 {result.ratting !== null && <Box ml={2}>{labels[hover !== -1 ? hover : result.ratting]}</Box>}
                                 <Avatar className={classes.purple}>{result.ratting}</Avatar>
+                            </CardContent>    
                             </div> 
                             
                                      
@@ -337,7 +350,7 @@ export default function Profiles() {
                         alt="Pick your Movie/Tv Show"
                         height="400"
                         width ="2"
-                        image={profileData.profileimage}                      
+                        image={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"}                      
                         />
                      </CardActionArea>):
                      ( <CardActionArea>                       
@@ -351,12 +364,36 @@ export default function Profiles() {
                      </CardActionArea>)
 
          )
+
+         const propic =(
+            (profileData.mainimage == null)?
+                  ( <CardActionArea>                       
+                      <CardMedia
+                      component="img"
+                      alt="Pick your Movie/Tv Show"
+                      height="300"
+                      width ="2"
+                      image={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"}                      
+                      />
+                   </CardActionArea>):
+                   ( <CardActionArea>                       
+                      <CardMedia
+                      component="img"
+                      alt="Pick your Movie/Tv Show"
+                      height="400"
+                      width ="2"
+                      image={profileData.mainimage}                      
+                      />
+                   </CardActionArea>)
+
+       )       
+
     return (
         <>
             <div>
             <Card className={classes.container}>
                 <CardActionArea className={classes.profileBox} >
-                <AccountBoxIcon style={{ fontSize: 400, color: green[500],alignContent:"center" }} color="action"/> 
+                {propic}
                   {(profileData.length == 0)?<h1> </h1>: <Typography className={classes.biodataname} variant="h4" style={{textAlign:"center"}}>{profileData.user.name}</Typography> }                    
                 </CardActionArea>              
                 {Nocover}
@@ -374,7 +411,7 @@ export default function Profiles() {
                     <MovieFilterIcon color="primary"/>
                 </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Favourite Genre" secondary={profileData.bio} />
+                <ListItemText primary="Favourite Car Brand" secondary={profileData.bio} />
             </ListItem>
             <ListItem>
                 <ListItemAvatar>
@@ -382,7 +419,16 @@ export default function Profiles() {
                     <TheatersIcon color="primary"/>
                 </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Favourite Movie/TV " secondary={profileData.address} />
+                <ListItemText primary="Address" secondary={profileData.address} />
+            </ListItem>
+
+                    <ListItem>
+                <ListItemAvatar>
+                <Avatar>
+                    <PermContactCalendarIcon color="primary"/>
+                </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Contact" secondary={profileData.status} />
             </ListItem>
             <ListItem>
                 <ListItemAvatar>
@@ -392,21 +438,13 @@ export default function Profiles() {
                 </ListItemAvatar>
                 <ListItemText primary="Country" secondary={profileData.phone} />
             </ListItem>
-                    <ListItem>
-                <ListItemAvatar>
-                <Avatar>
-                    <PermContactCalendarIcon color="primary"/>
-                </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Contact" secondary={profileData.status} />
-            </ListItem>
             </List>
             </div>
             <div>
                 {watchList}
             </div>
             <div>
-                <Button   variant="contained" color="primary" className={classes.watchlist}>WatchList</Button>
+                <Button   variant="contained" color="primary" className={classes.watchlist}>Favourite Cars</Button>
             </div>
             {console.log(profileData.watchlist)}
             {content}

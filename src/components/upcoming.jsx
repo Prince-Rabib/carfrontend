@@ -1,113 +1,176 @@
+import React,{useState, useEffect} from 'react'
+import { makeStyles, Grid,Paper, Avatar, TextField, Button, Typography,Link, responsiveFontSizes } from '@material-ui/core'
 
-import { useState,useEffect } from "react";
-import axios from "axios";
-import { Card, Container, makeStyles,CardActions, CardActionArea, CardMedia, CardContent, Typography,Button,Grid } from "@material-ui/core";
+import axios from 'axios';
 import { useHistory } from "react-router-dom";
-import Paginate  from "./pagination/Paginate";
-import moment from "moment";
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Select from '@material-ui/core/Select';
+import {host} from '../host';
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
 
 const useStyles = makeStyles((theme) =>({
-    container:{
-        marginBottom:theme.spacing(5),
-        marginTop:theme.spacing(2),
+
+    grid:{
+        marginTop:theme.spacing(10),
         height:'100%',
         display:'flex',
-        flexDirection: 'column'
-        
+        flexDirection: 'column',
+        textAlign:'center',        
      },
-     media:{
-         height:350,
-         paddingTop:'56.25%',
-         [theme.breakpoints.down("sm")]:{
-              height:350
-         }
+     snackbar:{
+        width: '100%',
+        '& > * + *': {
+          marginTop: theme.spacing(2),
+        },
      },
-     setup:{
-        marginTop:theme.spacing(5),
+     password:{
+        marginTop: theme.spacing(2)
+      },
+      signup:{
+        marginTop: theme.spacing(2)
+      },
+      paperStyle:{
+        padding :20,
+        height:'70vh',
+        width:500, 
+        margin:"20px auto",
+  
      },
-     numberoflines:{
-          WebkitLineClamp:1
-     },
-     pagination:{
-          marginTop: theme.spacing(5),
-          display: "flex",
-          justifyContent: "center"
+     signupSection:{
+        marginTop:theme.spacing(3),
+        marginBottom:theme.spacing(3)
      }
-     
+    
     
 }))
 
-const Tmdb = () => {
+ 
 
-   const baseUrl = "https://api.themoviedb.org/3/movie/upcoming?api_key=c92ecd56753067461e71f400f32022cf"
-   const classes = useStyles();
-   const [trend, setTrend] = useState([]);
+const Tmdb =()=>{
+     const [check,setCheck] =useState(false);
+     const [date,setdate] = useState("");    
+     const [mechanic, setmechanic] = useState("");
+     const [rows,Setrows]= useState([]);
+     const [open,setOpen] =useState({
+        status:false,
+        message: " ",
 
-   const [loading,setLoading] =useState(false);
-   const [currentPage, setCurrentPage] = useState(1);
-   const [postsPerPage,setPostsPerPage] = useState(9);
+     })
 
-   const history = useHistory();
+        const history = useHistory();
 
-   const handleRoute = (result, type) =>{
+        const handleRoute = (result) =>{
       
-        history.push('details/'+result+'/'+type)
-   }
+              history.push('/'+result)
 
-   const getrequest = async()=>{
-          setLoading(true);
-          const get = await axios.get(baseUrl)
-          const result = get.data.results;
-          setTrend(result);
-          setLoading(false);
-         }
+        }
+      const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }    
+        setOpen(false);
+      };
 
-   useEffect(() => {
-          
-        getrequest();
-        
-   }, [])
-
-   const indexOfLastPost = currentPage * postsPerPage;
-   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-   const currentPosts = trend.slice(indexOfFirstPost, indexOfLastPost);
-
-  
-  const changePage = (number)=>{
-         
-         setCurrentPage(number);
-         window.scroll(0,0);
-  }
-   return (
-      <> 
-    <Grid container spacing={2} className={classes.setup}>
-        {(loading)? <h1 className={classes.setup}> Loading </h1> :trend.map(result => {
-            return ( <Grid item md={4} xs={12} sm={6}>
-             <Card className={classes.container} onClick={()=> handleRoute((result.id),("movie"))} >
-                <CardActionArea>
-                    <CardMedia className={classes.media}
-                    image={"https://image.tmdb.org/t/p/original"+result.poster_path}
-                    title = {result.original_title}
-                     />                       
-                  <CardContent className={classes.numberoflines}>
-                      <Typography gutterBottom variant="h5">{(result.media_type=="tv") ? result.name: result.original_title}</Typography>
-                      <Typography variant="body2" >{result.overview}</Typography>
-                  </CardContent>              
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="Primary">Release Date</Button>
-                    <Button size="small" color="Secondary">{result.release_date}</Button>
-                </CardActions>
-            </Card>
-            
+      function createData(name, calories, fat, carbs, protein) {
+      return { name, calories, fat, carbs, protein };
+       }
+   
+    useEffect(async() => {
+      
+    let config = {
+        headers:{
+            "content-Type":"application/json"
+        }
+    }
+    try {
+     config = {
+            headers:{
+                "content-Type":"application/json",
+                "x-auth-token": localStorage.getItem("authToken")
+            }
+        }
+        const auth = await axios.get(host+"/api/auth",config);
+        const data = await axios.post(host+"/api/posts/mypost",{
+            'id':auth.data._id
+        },config);
+        if(data.data){
+            Setrows(data.data);
+        }
+ 
+    }   catch (error) {
      
-            </Grid>)
-        })}
-          
-        
-    </Grid>
+        history.push('/adminpost')
+    }
+  
+   },[check])
 
-    </>
-  )
+    const classes = useStyles();
+
+    return(
+      <>
+        <Grid className={classes.grid}>
+            
+                <TableContainer component={Paper}>
+                    <Table className={classes.table} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Name</TableCell>
+                          <TableCell align="center">Car</TableCell>
+                          <TableCell align="center">Phone</TableCell>
+                          <TableCell align="center">Location</TableCell>                          
+                          <TableCell align="center">Car Picture</TableCell>
+                          <TableCell align="center">Status</TableCell>
+                          <TableCell align="center">Price</TableCell>                         
+                          <TableCell align="center">Status</TableCell>
+
+
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {rows.slice(0).reverse().map((row) => (
+                          <TableRow key={row._id}>
+                            
+                            <TableCell component="th" scope="row">
+                             {row.name}
+                            </TableCell>
+                            <TableCell align="center">{row.car}</TableCell>
+                            <TableCell align="center">{row.phone}</TableCell>
+                             <TableCell align="center">{row.location}</TableCell> 
+                             <TableCell align="center"><img src={row.image} style={{width:400}} alt={row.shows} /></TableCell>
+                             <TableCell align="center">{row.text}</TableCell>
+                             <TableCell align="center">{row.price} TK</TableCell>                                                        
+                             {(row.carstatus == "true")? <TableCell align="center"><Button variant="contained" color="Primary">Approved</Button></TableCell>
+                             :<TableCell align="center"><Button variant="contained" color="secondary">Pending</Button></TableCell>}     
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                   </Table>
+             </TableContainer>   
+            
+        </Grid>
+
+     <div className={classes.snackbar}>
+
+            <Snackbar  open={open.status} autoHideDuration={6000} onClose={handleClose}>
+                <Alert  severity={open.severity} onClose={handleClose}>
+                    {open.message}
+                </Alert>
+            </Snackbar>  
+                
+     </div>
+        </>
+    )
 }
+
 export default Tmdb;

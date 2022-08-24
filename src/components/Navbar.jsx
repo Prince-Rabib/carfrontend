@@ -14,6 +14,8 @@ import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import MovieFilterIcon from '@material-ui/icons/MovieFilter';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
+import LocalCarWashIcon from '@material-ui/icons/LocalCarWash';
 
 const useStyles = makeStyles((theme) =>({
         Toolbar:{
@@ -107,6 +109,16 @@ const Navbar = () => {
         history.push(result)
    }
    
+   const handleRouteof = (account) => {
+      
+      
+            
+      
+    history.push("/"+account);
+    
+
+  };
+   
    const handleProfile = (account) => {
       
       
@@ -117,15 +129,6 @@ const Navbar = () => {
 
     };
 
-       const handleRouteof = (account) => {
-      
-      
-            
-      
-      history.push("/"+account);
-      
-
-    };
 
  useEffect(async(e) => {
      
@@ -178,7 +181,10 @@ const Navbar = () => {
              <EmojiTransportationIcon onClick={()=>handleRouteof('myposts')}/>             
              </Badge >             
             <Badge color="secondary" className={classes.badge} onClick={()=>handleRouteof('findposts')}>
-             <MovieFilterIcon onClick={()=>handleRouteof('findposts')}/>             
+             <FindInPageIcon onClick={()=>handleRouteof('findposts')}/>             
+             </Badge >
+             <Badge color="secondary" className={classes.badge} onClick={()=>handleRouteof('status')}>
+             <LocalCarWashIcon onClick={()=>handleRouteof('status')}/>             
              </Badge >
 
              <Logout/> 

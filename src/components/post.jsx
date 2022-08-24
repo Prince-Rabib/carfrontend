@@ -236,16 +236,20 @@ const Post = () => {
    const [imageInfo, setImageInfo] = useState([]);
  
    const uploadFile = () => {
-     if (imageUpload == null) return;
-     const dynamicImageName = `carReselling/${imageUpload.name + v4()}`;
-     const imageRef = ref(storage, dynamicImageName);
-     uploadBytes(imageRef, imageUpload).then((snapshot) => {
-       getDownloadURL(snapshot.ref).then((url) => {
-         // dispatch(formActions.addImageInfoFn({url: url, fileName: dynamicImageName}));
-         setImageInfo({url: url, fileName: dynamicImageName});
-         console.log(url);
-       });
-     });
+     if (imageUpload == '') {
+       handleOpened();
+     }else{
+      const dynamicImageName = `carReselling/${imageUpload.name + v4()}`;
+      const imageRef = ref(storage, dynamicImageName);
+      uploadBytes(imageRef, imageUpload).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          // dispatch(formActions.addImageInfoFn({url: url, fileName: dynamicImageName}));
+          setImageInfo({url: url, fileName: dynamicImageName});
+          console.log(url);
+        });
+      });
+     }
+
    };
 
     const toggleCardContent = (result) => {
@@ -389,7 +393,7 @@ const Post = () => {
    let count = 0;
    //////////////////////////////////////////////////////////////////////
   const [open, setOpen] = React.useState(false);
-
+  const [opened, setOpened] = React.useState(false);
 
   const descriptionElementRef = React.useRef(null);
   React.useEffect(() => {
@@ -408,6 +412,16 @@ const Post = () => {
 
   const handleClose = () => {
     setOpen(false);
+    window.location.reload(false);
+  };
+
+  const handleOpened = () => {
+    setOpened(true);
+  };
+
+  const handleClosed = () => {
+    setOpened(false);
+    
   };
 
 
@@ -534,7 +548,7 @@ const Post = () => {
           <TextField
           className={classes.password}
           id="outlined-multiline-static"
-          label="What's on your mind?"
+          label="More Details"
           multiline
           fullWidth
           rows={6}
@@ -584,12 +598,9 @@ const Post = () => {
                     </CardActionArea>
                      <CardActionArea >
                     <CardMedia className={classes.media}
-                          image={result.image}
-                         
+                          image={result.image}                        
                           />  
-                     </CardActionArea>
-
-                                       
+                     </CardActionArea>                                    
                    <CardActionArea>                      
                      <CardContent>             
                     <Typography variant="h5" className={classes.Status}></Typography>
@@ -739,14 +750,30 @@ const Post = () => {
         <DialogTitle id="alert-dialog-title">{"Thank You for doing a post"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-           Please kindly wait for the admin approval. As soon as your post gets verified, it will be on the air.
+           Please kindly wait for the Admin approval. As soon as your post gets verified, It will be on the air.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
+        <Button onClick={()=>handleRoute('status')} color="primary" autoFocus>
+            Check Status
+          </Button>
           <Button onClick={handleClose} color="primary" autoFocus>
             Agree
           </Button>
         </DialogActions>
+      </Dialog>
+    </div>
+    <div>
+      <Dialog
+        open={opened}
+        onClose={handleClosed}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        
+        <DialogContent>
+        <DialogTitle id="alert-dialog-title">{"Please,Choose your file at first!"}</DialogTitle>
+        </DialogContent>
       </Dialog>
     </div>
        </>

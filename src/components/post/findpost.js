@@ -2,6 +2,10 @@ import { CardMedia,Avatar,TextField,Card,  makeStyles,CardActions, CardActionAre
 import React,{useState,useEffect,useRef, useContext } from 'react'
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
+import MovieFilterIcon from '@material-ui/icons/MovieFilter';
+import PublicIcon from '@material-ui/icons/Public';
+import TheatersIcon from '@material-ui/icons/Theaters';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -17,23 +21,27 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {host} from '../../host';
-import PostAddIcon from '@material-ui/icons/PostAdd';
-import DayJS from 'react-dayjs';
-import moment from "moment";
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
-function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-  }
+import {host} from '../../host';
+import moment from "moment";
+
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject
+} from 'firebase/storage';
+import { storage } from '../../Firebase/firebase';
+import { v4 } from 'uuid';
 
 const useStyles = makeStyles((theme) =>({
     container:{
         
         marginTop:theme.spacing(2),
         height:'100%',
-        maxWidth:'100%',
         display:'flex',
         flexDirection: 'column'
         
@@ -47,10 +55,9 @@ const useStyles = makeStyles((theme) =>({
      },
      Button:{
          marginTop:theme.spacing(2),
-         maxWidth:'100%',
          display:'flex',
          flexDirection: 'row',
-         justifyContent:'center'
+         justifyContent:'right'
      },
      avatar:{
          display:'flex',
@@ -165,20 +172,6 @@ const useStyles = makeStyles((theme) =>({
       postMargin:{
         marginTop:theme.spacing(2)
       },
-      deleteButton:{
-          display:'flex',
-          justifyContent:'flex-end'
-      },
-      mypost:{
-        textAlign:'center'
-      },
-      icon:{
-        marginLeft:theme.spacing(1),
-        
-      },
-      preview:{
-        marginTop:theme.spacing(7)
-      },
        date:{
         minWidth: '92%',
         textAlign:"right",
@@ -194,30 +187,33 @@ const useStyles = makeStyles((theme) =>({
       exatTime:{
         marginLeft:theme.spacing(0.5)
       },
-      commentdate:{
+            commentdate:{
         marginLeft:theme.spacing(2)
       },
-      buttonwidth:{
-          maxWidth:'100%'
-      },
-        rootup: {
-    width: '100%',
-    '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
-  },
+      password:{
+        marginTop: theme.spacing(3),
+        marginLeft:theme.spacing(1),
 
+      },
+      start:{
+        minWidth: '100%',
+        display: "flex",
+        justifyContent: "center",
+        marginTop:theme.spacing(3)
+        },
+        input:{
+          marginTop: theme.spacing(1)
+        },
+        car: {
+          marginTop:theme.spacing(7)
+        }
 }))
 
 const Findpost = () => {
-   let baseUrl;
-   const [trend, setTrend] = useState([]);
-   const [search,setSearch] =useState();
 
-   const [loading,setLoading] =useState(false);
-   const [currentPage, setCurrentPage] = useState(1);
-   const [postsPerPage,setPostsPerPage] = useState(9);
-   const [Details, setDetails] = useState([])
+
+
+
 
 
    const classes = useStyles();
@@ -229,25 +225,17 @@ const Findpost = () => {
    const [contentVisible, setContentState] = useState(false);
    const [selectComment,setSelectComment] = useState();
    const [name, setName] = useState();
+   const [search,setSearch] =useState();
 
-   //////////////////////////snackbar//////////////////////
-
-  const [openup, setOpenup] = React.useState(false);
-
-  const handleClick = () => {
-    setOpen(true);
-  };
-
-  const handleClosed = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
+   const [car, setCar] = useState("");
 
 
-   ///////////////////////////////////////////////////////
+ 
+
+
+
+
+
 
     const toggleCardContent = (result) => {
       
@@ -311,67 +299,40 @@ const Findpost = () => {
         
        }
      }
-      const makePost = async(e) =>{         
-        e.preventDefault();
-        
-        try {
-            
-            const config = {
-                headers:{
-                    "content-Type":"application/json",
-                    "x-auth-token": localStorage.getItem("authToken")
-                }
-            }
-    
-            const data = await axios.post(host+"/api/posts/findpost",
-            {
-              shows:Details.name
-             },config);
-             if(data.data.length == 0){
-                 handleClick();
-             }
 
-            console.log("search data "+ data.data)
-            setPostData(data.data)
-            exampleInput.current.value = " "
-           
-            
-        } catch (error) {
-            
-        }
-   }
 
-    const getData = async()=>{
-              let config = {
-        headers:{
-            "content-Type":"application/json"
-        }
-    }
-    try {
-        config = {
-            headers:{
-                "content-Type":"application/json",
-                "x-auth-token": localStorage.getItem("authToken")
-            }
-        }
+   const getData = async()=>{
+    let config = {
+headers:{
+  "content-Type":"application/json"
+}
+}
+try {
+config = {
+  headers:{
+      "content-Type":"application/json",
+      "x-auth-token": localStorage.getItem("authToken")
+  }
+}
 
-        const auth = await axios.get(host+"/api/auth",config);
-        
+const auth = await axios.get(host+"/api/auth",config);
+const data = await axios.post(host+"/api/posts/findpost",{
+    'car':search
+   },config);
+  setName(auth.data.name);
+  setPostData(data.data)
 
-        if(auth){
-            const data = await axios.get(host+"/api/posts",config);
-            setName(auth.data.name);
-            setPostData(data.data)
-        }
- 
-    }   catch (error) {
-     
-        history.push('/login')
-    }
-    }
+
+}   catch (error) {
+
+
+}
+}
+
+
    useEffect(async(e) => {
-     getrequest();
-     getData();
+    
+    getData();
   
    },[change,search])
     
@@ -387,25 +348,14 @@ const Findpost = () => {
     const onComments = (e)=>{
         Comment = e.target.value
     }
-
-
    let count = 0;
    //////////////////////////////////////////////////////////////////////
   const [open, setOpen] = React.useState(false);
-  const [scroll, setScroll] = React.useState('paper');
 
-  const handleClickOpen = (scrollType) => () => {
-    setOpen(true);
-    setScroll(scrollType);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-
-  };
 
   const descriptionElementRef = React.useRef(null);
   React.useEffect(() => {
+    
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
@@ -414,240 +364,50 @@ const Findpost = () => {
     }
   }, [open]);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
 
 
-
-       const getdetails = async(id,type)=>{
-        
-             
-          
-             if(type == "movie"){
-                 
-                const Id = id;
-                    
-                const data = await axios.get("https://api.themoviedb.org/3/movie/"+Id+"?api_key=c92ecd56753067461e71f400f32022cf&language=en-US");
-                handleClose();
-                console.log(data.data)
-                setDetails({
-                  name: data.data.original_title,
-                  image: data.data.backdrop_path
-                })
-                            
-
-             }else{
-                const Id = id;
-                    
-                const data = await axios.get("https://api.themoviedb.org/3/tv/"+Id+"?api_key=c92ecd56753067461e71f400f32022cf&language=en-US");
-                handleClose();
-                setDetails({
-                  name: data.data.original_name,
-                  image: data.data.backdrop_path
-                })
-                           
-                console.log(data.data)
-  
-
-             }
-    }
-
-
-   const getrequest = async()=>{
-        
-         
-          setLoading(true);
-          
-          
-
-            (search ==null || search == "")? baseUrl="https://api.themoviedb.org/3/trending/all/day": baseUrl = "https://api.themoviedb.org/3/search/multi"
-
-          const get =  await axios.get(baseUrl, {
-              params:{
-                api_key:"c92ecd56753067461e71f400f32022cf",
-                language:"en-US",
-                page:1,
-                include_adult:false,
-                query: search
-              }
-          })
-          const result = get.data.results;
-          setTrend(result);
-          setLoading(false);
-
-         }
-
-         const deletePost = async(id)=>{
-                try {
-        
-        const config = {
-            headers:{
-                "content-Type":"application/json",
-                "x-auth-token": localStorage.getItem("authToken")
-            }
-        }
-            
-            let data = await axios.delete(host+"/api/posts/"+[id],config);
-            if(data.data){
-             getData();
-            }
-            
-            } catch(error) {
-
-            const err = error.response.data
-
-            
-             }
-         }
-
-
-
-
-   const checkData =()=>{
-      console.log("checkDetails: "+ Details.name);
-   }
-
-   const indexOfLastPost = currentPage * postsPerPage;
-   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-   const currentPosts = trend.slice(indexOfFirstPost, indexOfLastPost);
-
-   console.log(search);
-   const changePage = ()=>{
-         
-    
-    window.scroll(0,0);
-}
-
-  const card = (
-
-       (Details.length == 0)?
-           (<Card className={classes.preview} onClick={handleClickOpen('paper')}>
-      <CardActionArea>
-        
-        <CardMedia
-          component="img"
-          alt="Pick your Movie/Tv Show"
-          height="400"
-          width ="2"
-          image={image}
-          
-        />
-
-      </CardActionArea>
-
-    </Card>):(
-      <Card className={classes.preview} onClick={handleClickOpen('paper')}>
-      <CardActionArea>
-        
-        <CardMedia
-          component="img"
-          alt="Pick your Movie/Tv Show"
-          height="400"
-          width ="2"
-          image={"https://image.tmdb.org/t/p/original"+Details.image}
-          title= {Details.name}
-        />
-
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {Details.name}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-
-    </Card>
-
-    )
-  )
 
 
    return (
        <>
-      <div>
-        <Dialog
-        open={open}
-        onClose={handleClose}
-        scroll={scroll}
-        aria-labelledby="scroll-dialog-title"
-        aria-describedby="scroll-dialog-description"
-        >
-            
-             <div className={classes.box}>         
-      <div className={classes.root1}>
-      <TextField
-          id="outlined-full-width"
-          label="Movies & Tv Shows"
-          className={classes.textField}
-          placeholder="Search"
-          fullWidth
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
-          onChange={
-              (e)=> {setSearch(e.target.value)
-              changePage();
-            }
-        }
-        />
-      </div>
-    <Grid container spacing={2} className={classes.setup}>
-        {(loading)? <div className={classes.loading}>
-      <LinearProgress />
-      <LinearProgress color="secondary" />
-       </div> :trend.map(result => {
-            return ( <Grid key={result.id} item md={6} xs={6} sm={6}>
-             <Card className={classes.Container} onClick={()=> getdetails((result.id),(result.media_type))} >
-                <CardActionArea>
-                    <CardMedia className={classes.Media}
-                    image={"https://image.tmdb.org/t/p/original"+result.poster_path}
-                    title = {result.original_title}
-                     />                       
-                  <CardContent className={classes.numberoflines}>
-                      <Typography gutterBottom variant="h5">{(result.media_type=="tv") ? result.name: result.original_title}</Typography>
-                      <Typography variant="body2" >{result.overview}</Typography>
-                  </CardContent>              
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="Primary">Like</Button>
-                    <Button size="small" color="Primary">Share</Button>
-                </CardActions>
-            </Card>
-            
-     
-            </Grid>)
-        })}
-          
-        
-    </Grid>
-              </div> 
-
-         </Dialog>
-      </div>   
-       
-        
-
-         {card}
-
-    
+             
         <form  noValidate autoComplete="off" onSubmit={handleSubmit}>
-          <div className={classes.postMargin}>
-          </div>
-          <div className={classes.Button} >
-        <Button className={classes.buttonwidth}  variant="contained" color="primary" type="submit" onClick={(e)=> makePost(e)} >
-          Search Now
-        </Button>
-         </div>
+          <div className={classes.car}>
+          <TextField
+                  
+                  className={classes.password}
+                  id="outlined-password-input"
+                  label="Search Car"
+                  type="text"
+                  autoComplete="current-password"
+                  variant="outlined"
+                  inputRef={exampleInput}  
+                  onChange={
+                    (e)=> {setSearch(e.target.value)
+                    
+                  }
+              }
+                  fullWidth
+                 />               
+           </div>
         </form>
        
         
-        <Grid container spacing={2}>
+       <Grid container spacing={2}>
            {postData.slice().reverse().map(result => {
                return ( 
             <Grid key={result._id} item md={12} xs={12} sm={6}>
                 <Card className={classes.container}>
                    <CardActionArea>                      
-                     <CardContent>
+                     <CardContent >
                   <div className={classes.time}>
                        <div >
                             <h5 className={classes.exatTime}>{moment(result.date).fromNow()}</h5>
@@ -673,18 +433,58 @@ const Findpost = () => {
                     </CardActionArea>
                      <CardActionArea >
                     <CardMedia className={classes.media}
-                          image={"https://image.tmdb.org/t/p/original"+result.image}
-                          title = {result.shows}
+                          image={result.image}
+                         
                           />  
                      </CardActionArea>
 
                                        
                    <CardActionArea>                      
                      <CardContent>             
-                    <Typography variant="h5" className={classes.Status}>{result.shows}</Typography>
+                    <Typography variant="h5" className={classes.Status}></Typography>
                     </CardContent>
                     </CardActionArea>
-
+                   <CardActionArea>
+                   <div>
+            <List className={classes.root2}>
+            <ListItem>
+                <ListItemAvatar>
+                <Avatar>
+                    <DriveEtaIcon color="primary"/>
+                </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Car Model" secondary={result.car} />
+            </ListItem>
+            <ListItem>
+                <ListItemAvatar>
+                <Avatar>
+                    <TheatersIcon color="primary"/>
+                </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Address" secondary={result.location} />
+            </ListItem>
+            <ListItem>
+                <ListItemAvatar>
+                <Avatar>
+                    <PermContactCalendarIcon color="primary"/>
+            </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Contact Number" secondary={result.phone} />
+            </ListItem>
+                    <ListItem>
+                <ListItemAvatar>
+                <Avatar>
+                    <AttachMoneyIcon color="primary"/>
+                   
+                </Avatar>
+                </ListItemAvatar>
+                <Button variant="contained" color="primary">
+                {result.price} Tk
+                 </Button>
+            </ListItem>
+            </List>
+            </div>
+                   </CardActionArea>
                    <CardActions>
                        <Button size="small" color="Primary" onClick={()=> makeLike(result._id)}>Likes ({result.likes.length})</Button>
                        <Button size="small" color="Primary" onClick={() => 
@@ -702,6 +502,7 @@ const Findpost = () => {
                                 <ListItem alignItems="flex-start">
                                   <ListItemAvatar>
                                     <Avatar className={classes.purple} alt={comments.name} src="/static/images/avatar/1.jpg" />
+            
                                   </ListItemAvatar>
                                   <ListItemText
                                     primary={ 
@@ -776,14 +577,26 @@ const Findpost = () => {
             </Grid>)
            })}
        </Grid>
-            <div className={classes.rootup}>
-
-      <Snackbar open={openup} autoHideDuration={6000} onClose={handleClosed}>
-        <Alert onClose={handleClose} severity="error">
-          No Post Found
-        </Alert>
-      </Snackbar>
-      
+        {console.log(count)}
+        <div>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Thank You for doing a post"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+           Please kindly wait for the admin approval. As soon as your post gets verified, it will be on the air.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
        </>
    )

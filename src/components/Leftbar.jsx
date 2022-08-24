@@ -14,6 +14,7 @@ import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
+import LocalCarWashIcon from '@material-ui/icons/LocalCarWash';
 
 const useStyles = makeStyles((theme) =>({
           container:{
@@ -142,40 +143,31 @@ const Leftbar = () => {
              <AccountCircleIcon className={classes.icon} onClick={()=> handleRoute("myposts")}/>
              <Typography className={classes.text} onClick={()=>handleProfile(userid)}>My Profile</Typography>
                        
-          </div>          
-                    <div className={classes.item}>
+          </div>
+          <div className={classes.item}>
+             <EmojiTransportationIcon className={classes.icon} onClick={()=> handleRoute("myposts")}/>
+             <Typography className={classes.text} onClick={()=> handleRoute("myposts")}>My Posts</Typography>            
+          </div>               
+         <div className={classes.item}>
 
              
-             <EmojiTransportationIcon className={classes.icon} onClick={()=> handleRoute("myposts")}/>
-             <Typography className={classes.text} onClick={()=> handleRoute("myposts")}>My Posts</Typography>
+             <LocalCarWashIcon className={classes.icon} onClick={()=> handleRoute("status")}/>
+             <Typography className={classes.text} onClick={()=> handleRoute("status")}>Car Post Status</Typography>
                        
           </div>
                               <div className={classes.item}>
 
              
              <FindInPageIcon className={classes.icon} onClick={()=> handleRoute("findposts")}/>
-             <Typography className={classes.text} onClick={()=> handleRoute("findposts")}>Find Posts</Typography>
+             <Typography className={classes.text} onClick={()=> handleRoute("findposts")}>Search Cars</Typography>
                        
           </div>
            <div className={classes.item}>
              <PeopleIcon className={classes.icon} onClick={()=> handleRoute("search")}/>
              <Typography className={classes.text} onClick={()=> handleRoute("search")}>Friends</Typography>            
           </div>         
-          <div className={classes.item}>
-             <MovieIcon className={classes.icon} onClick={()=> handleRoute("trending")} />
-             <Typography className={classes.text} onClick={()=> handleRoute("trending")}>Latest Movies & TV Shows</Typography>            
-          </div>
-
-          <div className={classes.item}>
-             <PlayCircleOutline className={classes.icon} onClick={()=> handleRoute("moviestvshows")}/>
-             <Typography className={classes.text} onClick={()=> handleRoute("moviestvshows")}>Search Movies & TV Shows</Typography>            
-          </div>
 
 
-          <div className={classes.item}>
-             <NewReleasesIcon className={classes.icon} onClick={()=> handleRoute("upcoming")}/>
-             <Typography className={classes.text} onClick={()=> handleRoute("upcoming")}>Upcoming Movies</Typography>            
-          </div>
           <div className={classes.item}>
              <ExitToAppIcon className={classes.icon} onClick={()=> handleClose()}/>
              <Typography className={classes.text} onClick={()=> handleClose()}>Log Out</Typography>            

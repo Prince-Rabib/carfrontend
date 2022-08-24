@@ -9,6 +9,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import {host} from '../host';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import Data from "../Views/cars.json"
 const useStyles = makeStyles((theme) =>({
     container:{
@@ -86,19 +87,19 @@ const MediaTv = () => {
     <Grid container spacing={2} className={classes.setup}>
         <div className={classes.text}>
             <div className={classes.playing}>
-               <PlayCircleOutlineIcon/>
+               <DriveEtaIcon/>
             </div>
             <div>
-                <Typography gutterBottom variant="h5" >Popular Movies</Typography>
+                <Typography gutterBottom variant="h5" >World's Best Cars</Typography>
             </div>
         
         </div>
         {(loading)? <h1 className={classes.setup}>  </h1> :Data.map(result => {
             return ( <Grid item md={12} xs={12} sm={12}>
-            <Card className={classes.container} onClick={()=> handleRoute((result.id),("movie"))}>
+            <Card className={classes.container} >
                 <CardActionArea className={classes.poster}>
                     <CardMedia className={classes.media}
-                    style={{height:10,width:100}}
+                    style={{height:10,width:250}}
                     image={result.image}
                     title = {result.original_title}
                      />                                  

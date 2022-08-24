@@ -1,5 +1,4 @@
 import React,{useState,useEffect,useRef, useContext } from 'react'
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -7,18 +6,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {Card, makeStyles,Grid,Paper, Avatar, TextField, Button, Typography,Link,CardMedia ,CardActions, CardActionArea, CardContent,} from '@material-ui/core'
 import { useHistory,useLocation } from "react-router-dom";
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
+
 import axios from 'axios';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import Select from '@material-ui/core/Select';
-import BuildIcon from '@material-ui/icons/Build';
-import { Phone } from '@material-ui/icons';
-import Rating from '@material-ui/lab/Rating';
-import Box from '@material-ui/core/Box';
-import Tooltip from '@material-ui/core/Tooltip';
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
+
 import {host} from '../../host';
 import {
   ref,
@@ -128,9 +118,6 @@ const useStyles = makeStyles((theme) =>({
           
         
       },
-
-
-      
     
       Container:{
         
@@ -206,7 +193,7 @@ const useStyles = makeStyles((theme) =>({
         start:{
         minWidth: '100%',
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: "space-around",
         marginBottom:theme.spacing(2)
         },
 
@@ -223,42 +210,57 @@ const Cover = () => {
   const [Details, setDetails] = useState([]);
   const [trend, setTrend] = useState([]);
   const [search,setSearch] =useState();
-  const [open, setOpen] = React.useState(false);
   const [loading,setLoading] =useState(false);
   const [scroll, setScroll] = React.useState('paper');
 
+  const [profileupload, setProfileupload] = useState('');
+  const [profileinfo, setProfileinfo] = useState([]);
 
+
+
+  
+
+///////////////////////////////////////////////////////////
   const [imageUpload, setImageUpload] = useState('');
-
-
   const [imageInfo, setImageInfo] = useState([]);
-  const [profile, setProfile] = useState([]);
+
 
   const uploadFile = () => {
-    if (imageUpload == null) return;
-    const dynamicImageName = `carReselling/${imageUpload.name + v4()}`;
-    const imageRef = ref(storage, dynamicImageName);
-    uploadBytes(imageRef, imageUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        // dispatch(formActions.addImageInfoFn({url: url, fileName: dynamicImageName}));
-        setImageInfo({url: url, fileName: dynamicImageName});
-        console.log(url);
+    if (imageUpload == '') {
+      handleClickOpen()
+    }else{
+      const dynamicImageName = `carReselling/${imageUpload.name + v4()}`;
+      const imageRef = ref(storage, dynamicImageName);
+      uploadBytes(imageRef, imageUpload).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          // dispatch(formActions.addImageInfoFn({url: url, fileName: dynamicImageName}));
+          setImageInfo({url: url, fileName: dynamicImageName});
+          console.log(url);
+        });
       });
-    });
-  };
+    }
 
-  const uploadFileProfile = () => {
-    if (imageUpload == null) return;
-    const dynamicImageName = `carReselling/${imageUpload.name + v4()}`;
+  };
+/////////////////Profile image /////////////////////////
+const Uploadprofile = () => {
+  if (profileupload == '') {
+    handleClickOpen()
+  }else{
+
+    const dynamicImageName = `carReselling/${profileupload.name + v4()}`;
     const imageRef = ref(storage, dynamicImageName);
-    uploadBytes(imageRef, imageUpload).then((snapshot) => {
+    uploadBytes(imageRef, profileupload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         // dispatch(formActions.addImageInfoFn({url: url, fileName: dynamicImageName}));
-        setProfile({url: url, fileName: dynamicImageName});
+        setProfileinfo({url: url, fileName: dynamicImageName});
         console.log(url);
       });
     });
-  };
+    
+  }
+
+};
+
   
 //////////////////////ratting///////////////////////////
 
@@ -266,28 +268,11 @@ const Cover = () => {
   const [hover, setHover] = React.useState(-1);
 
 ///////////////////////////////////////////////////////
-
-
-
-
-
   let baseUrl;
 
 
-   const changePage = ()=>{
-         
-    
-    window.scroll(0,0);
-}
-  const handleClickOpen = (scrollType) => () => {
-    setOpen(true);
-    setScroll(scrollType);
-  };
 
-  const handleClose = () => {
-    setOpen(false);
-    
-  };
+
 
   const descriptionElementRef = React.useRef(null);
 
@@ -316,6 +301,7 @@ const Cover = () => {
 
 
     const exampleInput = useRef();
+
     const loginHandler = async(e)=>{
           
         console.log("working");
@@ -343,36 +329,38 @@ const Cover = () => {
            }
    }
 
+//////////////////////profile handler/////////////////////
 
-   const Profilehandler = async(e)=>{
+///////////////////////////////////////////////////////////////
+const ProfileHandler = async(e)=>{
           
-    console.log("working");
-    
-    try {
+  console.log("working");
+  
+  try {
 
-    const config = {
-        headers:{
-            "content-Type":"application/json",
-            "x-auth-token": localStorage.getItem("authToken")
-        }
-    }
+  const config = {
+      headers:{
+          "content-Type":"application/json",
+          "x-auth-token": localStorage.getItem("authToken")
+      }
+  }
 
 
-        let data = await axios.post(host+"/api/profiles"+[e],{                
-            "profileimage":profile.url,
+      let data = await axios.post(host+"/api/profiles"+[e],{                
+          "mainimage":profileinfo.url,
 
-          },config);
-         console.log(profile.url + "working")
-         handleClose();
-         window.location.reload(false);
-        } catch(error) {
+        },config);
 
-        const err = error.response.data 
-       }
+       handleClose();
+       window.location.reload(false);
+      } catch(error) {
+
+      const err = error.response.data 
+     }
 }
 
 
-
+///////////////////////////////////////////////////////////////
 
      useEffect(async() => {
                 console.log("Details "+Details);      
@@ -383,43 +371,49 @@ const Cover = () => {
    return (
        <>
         <div className={classes.start}>
+        <div>
         <input
           className={classes.input}
         type="file"
         onChange={(event) => {
-        setImageUpload(event.target.files[0]);
-          
-        }}
-        
-      />
-      
-      <Button variant="contained" color="primary" onClick={uploadFile}>
-  Upload Now
-</Button>
-        <input
-          className={classes.input}
-        type="file"
-        onChange={(event) => {
-        setImageUpload(event.target.files[0]);
-          
-        }}
-        
-      />
-      
-      <Button variant="contained" color="primary" onClick={uploadFileProfile}>
-  Upload Now
-</Button>
-        </div>
-
-       
-      <div>
-
+          setProfileupload(event.target.files[0]);         
+          }}   
+        />  
+      <Button variant="contained" color="primary" onClick={Uploadprofile}>
+       Upload Profile </Button>
       </div>
-
-        {(imageInfo.length === 0)? <h1></h1> : loginHandler()}
-        {(profile.length === 0)? <h1></h1> : Profilehandler()}
-        
+          <div>
+        <input
+          className={classes.input}
+        type="file"
+        onChange={(event) => {
+        setImageUpload(event.target.files[0]);         
+        }}   
+      />  
+      <Button variant="contained" color="primary" onClick={uploadFile}>
+      Upload Cover </Button>
+      
+      </div>
  
+  </div>
+        {(imageInfo.length === 0)? <h1></h1> : loginHandler()}
+        {(profileinfo.length === 0)? <h1></h1> : ProfileHandler()}
+
+
+        <div>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        
+        <DialogContent>
+        <DialogTitle id="alert-dialog-title">{"Please,Choose your file at first!"}</DialogTitle>
+        </DialogContent>
+      </Dialog>
+    </div>
+        
     </>
    )
 };

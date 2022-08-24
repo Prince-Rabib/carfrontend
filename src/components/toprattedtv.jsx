@@ -8,6 +8,7 @@ import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import {host} from '../host';
 const useStyles = makeStyles((theme) =>({
     container:{
@@ -85,7 +86,7 @@ const MediaTv = () => {
     <Grid container spacing={2} className={classes.setup}>
         <div className={classes.text}>
             <div className={classes.playing}>
-               <PlayCircleOutlineIcon/>
+            <DriveEtaIcon/>
             </div>
             <div>
                 <Typography gutterBottom variant="h5" >Top Ratted TV Shows</Typography>

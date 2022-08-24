@@ -52,6 +52,11 @@ const useStyles = makeStyles((theme) =>({
      },
         logo:{
          marginTop: theme.spacing(1)
+     },
+     biodata:{
+      minWidth: '100%',
+      display: "flex",
+      justifyContent: "space-between",
      }
 }))
 const BioData = () => {
@@ -168,19 +173,19 @@ const BioData = () => {
                      </Typography>
                 </Grid>
 
-                
                    <TextField
                   
                    helperText={fieldError.name}
                    className={classes.password}
                    id="outlined-password-input"
-                   label="Favourite Genre"
+                   label="Favourite Car Brand"
                    type="text"
                    autoComplete="current-password"
                    variant="outlined"
                    onChange={(e)=>setname(e.target.value)}
                    fullWidth
-                  />               
+                  /> 
+        
                    <TextField
                   
                    helperText={fieldError.name}
@@ -192,7 +197,8 @@ const BioData = () => {
                    variant="outlined"
                    onChange={(e)=>setAddress(e.target.value)}
                    fullWidth
-                  />                    
+                  />
+                     
                    <TextField
                   
                    helperText={fieldError.name}
@@ -206,7 +212,7 @@ const BioData = () => {
                    fullWidth
                   /> 
 
-                                     <TextField
+                   <TextField
                   
                    helperText={fieldError.name}
                    className={classes.password}
@@ -218,8 +224,7 @@ const BioData = () => {
                    onChange={(e)=>setStatus(e.target.value)}
                    fullWidth
                   />                                 
-                    
-                       
+    
                 <Button className={classes.submitButton}color="primary" type='submit'  variant="contained"  onClick={()=> loginHandler()} fullWidth>Submit</Button>
             </Paper>
         </DialogContent>

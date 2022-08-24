@@ -104,10 +104,10 @@ const useStyles = makeStyles((theme) =>({
          marginTop:theme.spacing(2),
      },
       root: {
-        width: 200,
-        height:100,
+
         display: 'flex',
-        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: "space-around",
       },
       inline: {
         display: 'inline',
@@ -188,9 +188,8 @@ const useStyles = makeStyles((theme) =>({
       
         },
         ratting:{
-          display:"flex",
-          alignItems:"center"
-
+           display:'flex',
+           justifyContent:'space-around'
         },
           fab: {
           margin: theme.spacing(2),
@@ -212,7 +211,8 @@ const useStyles = makeStyles((theme) =>({
         },
         input:{
           marginTop: theme.spacing(1)
-        }
+        },
+
 }))
 
 
@@ -221,27 +221,47 @@ const useStyles = makeStyles((theme) =>({
 const WatchList = () => {
   const classes = useStyles();
   const [Details, setDetails] = useState([]);
-  const [trend, setTrend] = useState([]);
+  const [trend, setTrend] = useState();
   const [search,setSearch] =useState();
+
+
+
+
   const [open, setOpen] = React.useState(false);
-  const [loading,setLoading] =useState(false);
-  const [scroll, setScroll] = React.useState('paper');
+  
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+
+
+  //////////////////////////////////
 
   const [imageUpload, setImageUpload] = useState('');
 
   const [imageInfo, setImageInfo] = useState([]);
 
   const uploadFile = () => {
-    if (imageUpload == null) return;
-    const dynamicImageName = `carReselling/${imageUpload.name + v4()}`;
-    const imageRef = ref(storage, dynamicImageName);
-    uploadBytes(imageRef, imageUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        // dispatch(formActions.addImageInfoFn({url: url, fileName: dynamicImageName}));
-        setImageInfo({url: url, fileName: dynamicImageName});
-        console.log(url);
+    if (imageUpload == ''){
+      console.log('open')
+      handleClickOpen();
+    }else{
+      const dynamicImageName = `carReselling/${imageUpload.name + v4()}`;
+      const imageRef = ref(storage, dynamicImageName);
+      uploadBytes(imageRef, imageUpload).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          // dispatch(formActions.addImageInfoFn({url: url, fileName: dynamicImageName}));
+          setImageInfo({url: url, fileName: dynamicImageName});
+          console.log(url);
+        });
       });
-    });
+    }
+
   };
   
 //////////////////////ratting///////////////////////////
@@ -251,27 +271,6 @@ const WatchList = () => {
 
 ///////////////////////////////////////////////////////
 
-
-
-
-
-  let baseUrl;
-
-
-   const changePage = ()=>{
-         
-    
-    window.scroll(0,0);
-}
-  const handleClickOpen = (scrollType) => () => {
-    setOpen(true);
-    setScroll(scrollType);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    
-  };
 
   const descriptionElementRef = React.useRef(null);
 
@@ -317,7 +316,7 @@ const WatchList = () => {
         }
 
             let data = await axios.put(host+"/api/profiles/watchlist"+[e],{                
-                "title":imageInfo.name,
+                "title":trend,
                 "image":imageInfo.url,
                 "ratting":value,
                 "tmdb":imageInfo.name,
@@ -329,9 +328,6 @@ const WatchList = () => {
             const err = error.response.data 
            }
    }
-
-
-
 
      useEffect(async() => {
                 console.log("Details "+Details);      
@@ -353,9 +349,8 @@ const WatchList = () => {
          
                 </CardActionArea>
 
-
             <CardActionArea className={classes.ratting}>
-              <div className={classes.root}>
+              
                 <Rating
                   name="hover-feedback"
                   value={value}
@@ -366,9 +361,10 @@ const WatchList = () => {
                   onChangeActive={(event, newHover) => {
                     setHover(newHover);
                   }}
-                />
+                />                    
+                 <TextField id="outlined-basic" label="Car Model " variant="outlined" onChange={(e)=>setTrend(e.target.value)} />
+                     
                 {value !== null && <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>}
-              </div> 
               <Button onClick={()=> loginHandler()} variant="contained" color="primary">Submit</Button>         
                 </CardActionArea>
                
@@ -392,16 +388,27 @@ const WatchList = () => {
       />
       
       <Button variant="contained" color="primary" onClick={uploadFile}>
-  Upload Now
+  Upload Cars
 </Button>
 {/* Photo Upload feature */}
-        </div>
-
-       
-      <div>
+<div>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        
+        <DialogContent>
+        <DialogTitle id="alert-dialog-title">{"Please,Choose your file at first!"}</DialogTitle>
+        </DialogContent>
+      </Dialog>
+    </div>
 
       </div>
        {(imageInfo.length === 0)? <h1></h1> : detailpage}
+
+
  
     </>
    )

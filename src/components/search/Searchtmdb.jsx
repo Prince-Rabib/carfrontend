@@ -153,11 +153,6 @@ const Search = () => {
             
                 history.push('/search')
             }
-        
-        
-
-
-          
           
          }
 
@@ -172,11 +167,7 @@ const Search = () => {
    const currentPosts = trend.slice(indexOfFirstPost, indexOfLastPost);
 
    console.log(search);
-   const changePage = ()=>{
-         
-    
-    window.scroll(0,0);
-}
+
 
    return (
       <> 
@@ -194,7 +185,7 @@ const Search = () => {
           variant="outlined"
           onChange={
               (e)=> {setSearch(e.target.value)
-              changePage();
+              
             }
         }
         />

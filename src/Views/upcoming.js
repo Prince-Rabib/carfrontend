@@ -34,12 +34,10 @@ const Trending = () => {
            <Grid item sm={2} >
            <Leftbar/>
            </Grid>
-           <Grid item sm={7} xs={10} className={classes.up}>
+           <Grid item sm={10} xs={10} className={classes.up}>
               <Upcoming/>
            </Grid>
-           <Grid item sm={3} className={classes.right}>
-            <Toprattertv/>  
-           </Grid>
+
         </Grid>
         <Add/>
       </div>

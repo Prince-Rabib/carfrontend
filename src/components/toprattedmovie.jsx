@@ -9,6 +9,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import {host} from '../host';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import Data from "../Views/cars.json"
 const useStyles = makeStyles((theme) =>({
     container:{
@@ -87,7 +88,7 @@ const MediaTv = () => {
     <Grid container spacing={2} className={classes.setup}>
         <div className={classes.text}>
             <div className={classes.playing}>
-               <PlayCircleOutlineIcon/>
+               <DriveEtaIcon/>
             </div>
             <div>
                 <Typography gutterBottom variant="h5">Top Ratted Movies</Typography>
@@ -99,7 +100,7 @@ const MediaTv = () => {
             <Card className={classes.container} >
                 <CardActionArea className={classes.poster}>
                     <CardMedia className={classes.media}
-                    style={{height:10,width:200}}
+                    style={{height:10,width:300}}
                     image={result.image}
                     title = {result.original_title}
                      />                                  

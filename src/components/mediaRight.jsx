@@ -3,11 +3,7 @@ import { useState,useEffect } from "react";
 import axios from "axios";
 import { Card, Container, makeStyles,CardActions, CardActionArea, CardMedia, CardContent, Typography,Button,Grid } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import Paginate  from "./pagination/Paginate";
-import IconButton from '@material-ui/core/IconButton';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Data from "../Views/cars.json"
 
@@ -88,7 +84,7 @@ const MediaRight = () => {
     <Grid container spacing={2} className={classes.setup}>
         <div className={classes.text}>
             <div className={classes.playing}>
-               <PlayCircleOutlineIcon/>
+            <DriveEtaIcon/>
             </div>
             <div>
                 <Typography gutterBottom variant="h5" >Top Ratted Car</Typography>
@@ -97,7 +93,7 @@ const MediaRight = () => {
         </div>
         {(loading)? <h1 className={classes.setup}>  </h1> :Data.map(result => {
             return ( <Grid item md={12} xs={12} sm={12}>
-            <Card className={classes.container} onClick={()=> handleRoute((result.id),("movie"))}>
+            <Card className={classes.container} >
                 <CardActionArea className={classes.poster}>
                     <CardMedia className={classes.media}
                     style={{height:10,width:200}}

@@ -276,6 +276,8 @@ export default function Profiles() {
                             
                             <CardActionArea>
                                 <CardMedia className={classes.Media}
+                                height="50"
+                                width ="200"
                                 image={result.image}
                                 title = {result.title}
                                 />                       
@@ -347,17 +349,41 @@ export default function Profiles() {
                         alt="Pick your Movie/Tv Show"
                         height="400"
                         width ="2"
-                        image={"https://image.tmdb.org/t/p/original"+profileData.coverimage}                      
+                        image={profileData.coverimage}                      
                         />
                      </CardActionArea>)
 
          )
+
+         const propic =(
+            (profileData.mainimage == null)?
+                  ( <CardActionArea>                       
+                      <CardMedia
+                      component="img"
+                      alt="Pick your Movie/Tv Show"
+                      height="300"
+                      width ="2"
+                      image={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"}                      
+                      />
+                   </CardActionArea>):
+                   ( <CardActionArea>                       
+                      <CardMedia
+                      component="img"
+                      alt="Pick your Movie/Tv Show"
+                      height="400"
+                      width ="2"
+                      image={profileData.mainimage}                      
+                      />
+                   </CardActionArea>)
+
+       )       
+
     return (
-        <>
+        <>      
             <div>
             <Card className={classes.container}>
                 <CardActionArea className={classes.profileBox} >
-                <AccountBoxIcon style={{ fontSize: 400, color: green[500],alignContent:"center" }} color="action"/> 
+                {propic}
                   {(profileData.length == 0)?<h1> </h1>: <Typography className={classes.biodataname} variant="h4" style={{textAlign:"center"}}>{profileData.user.name}</Typography> }                    
                 </CardActionArea>              
                 {Nocover}

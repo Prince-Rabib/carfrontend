@@ -81,7 +81,7 @@ const App = () => {
          <ProtectedRoute path="/adminpost"  component={Adminpost}/>        
          <ProtectedRoute path="/myposts"  component={Yourpost}/>    
          <ProtectedRoute path="/findposts"  component={FindPost}/>
-         <ProtectedRoute path="/upcoming"  component={Upcoming}/>          
+         <ProtectedRoute path="/status"  component={Upcoming}/>          
          </Switch>  
         </Router>
         
