@@ -216,9 +216,15 @@ const Cover = () => {
   const [profileupload, setProfileupload] = useState('');
   const [profileinfo, setProfileinfo] = useState([]);
 
+  const [open, setOpen] = React.useState(false);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-  
+  const handleClose = () => {
+    setOpen(false);
+  };
 
 ///////////////////////////////////////////////////////////
   const [imageUpload, setImageUpload] = useState('');
