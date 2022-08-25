@@ -1,16 +1,12 @@
 import React,{useState,useEffect} from 'react'
 import { Container, makeStyles, Typography } from "@material-ui/core";
-import { Home,Person,List,PhotoCamera,PlayCircleOutline} from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import PeopleIcon from '@material-ui/icons/People';
-import MovieIcon from '@material-ui/icons/Movie';
 import PermDeviceInformationIcon from '@material-ui/icons/PermDeviceInformation';
 import {host} from '../host';
-import PostAddIcon from '@material-ui/icons/PostAdd';
 import FindInPageIcon from '@material-ui/icons/FindInPage';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';

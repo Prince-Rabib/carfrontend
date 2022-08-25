@@ -1,14 +1,8 @@
 import { useState,useEffect } from "react";
 import axios from "axios";
-import { Card, Container, makeStyles,CardActions, CardActionArea, CardMedia, CardContent, Typography,Button,Grid } from "@material-ui/core";
+import { Card,  makeStyles, CardActionArea, CardMedia, CardContent, Typography,Grid } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import Paginate  from "./pagination/Paginate";
-import IconButton from '@material-ui/core/IconButton';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-import {host} from '../host';
+
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import Data from "../Views/cars.json"
 const useStyles = makeStyles((theme) =>({
@@ -49,34 +43,18 @@ const useStyles = makeStyles((theme) =>({
 
 const MediaTv = () => {
 
-   const baseUrl = "https://api.themoviedb.org/3/movie/popular?api_key=c92ecd56753067461e71f400f32022cf&language=en-US"
+
    const classes = useStyles();
-   const [trend, setTrend] = useState([]);
 
    const [loading,setLoading] =useState(false);
 
 
-   const history = useHistory();
 
-   const handleRoute = (result, type) =>{
-      
-        history.push('/'+"details/"+result+'/'+type);
-        window.location.reload(false);
-   }
 
-   const getrequest = async()=>{
-          setLoading(true);
-          console.log("tmdb id worked");
-          const get = await axios.get(baseUrl)
-          const result = get.data.results;
-          console.log("tmdb id "+get);
-          setTrend(result);
-          setLoading(false);
-         }
 
    useEffect(() => {
           
-        getrequest();
+     
         
    }, [])
 

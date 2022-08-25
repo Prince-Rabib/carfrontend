@@ -1,26 +1,15 @@
 import React,{useState,useEffect,useRef, useContext } from 'react'
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
+
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {Card, makeStyles,Grid,Paper, Avatar, TextField, Button, Typography,Link,CardMedia ,CardActions, CardActionArea, CardContent,} from '@material-ui/core'
 import { useHistory,useLocation } from "react-router-dom";
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 import axios from 'axios';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import Select from '@material-ui/core/Select';
-import BuildIcon from '@material-ui/icons/Build';
-import { Phone } from '@material-ui/icons';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
-import Tooltip from '@material-ui/core/Tooltip';
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-import Input from '@material-ui/core/Input';
-import InputAdornment from '@material-ui/core/InputAdornment';
+
 
 import {host} from '../../host'
 import {

@@ -1,9 +1,7 @@
 import { CardMedia,Avatar,TextField,Card,  makeStyles,CardActions, CardActionArea, CardContent, Typography,Button,Grid } from "@material-ui/core";
-import React,{useState,useEffect,useRef, useContext } from 'react'
+import React,{useState,useEffect,useRef } from 'react'
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
-import MovieFilterIcon from '@material-ui/icons/MovieFilter';
-import PublicIcon from '@material-ui/icons/Public';
 import TheatersIcon from '@material-ui/icons/Theaters';
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 
@@ -13,16 +11,13 @@ import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
-import LinearProgress from '@material-ui/core/LinearProgress';
+
 import Dialog from '@material-ui/core/Dialog';
-import { DetailsOutlined } from "@material-ui/icons";
-import image from '../../imagepost.png';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 import {host} from '../../host';

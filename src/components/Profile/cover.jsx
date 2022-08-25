@@ -1,10 +1,8 @@
-import React,{useState,useEffect,useRef, useContext } from 'react'
+import React,{useState,useEffect,useRef } from 'react'
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {Card, makeStyles,Grid,Paper, Avatar, TextField, Button, Typography,Link,CardMedia ,CardActions, CardActionArea, CardContent,} from '@material-ui/core'
+import { makeStyles, Button} from '@material-ui/core'
 import { useHistory,useLocation } from "react-router-dom";
 
 import axios from 'axios';
@@ -208,10 +206,9 @@ const useStyles = makeStyles((theme) =>({
 const Cover = () => {
   const classes = useStyles();
   const [Details, setDetails] = useState([]);
-  const [trend, setTrend] = useState([]);
+
   const [search,setSearch] =useState();
-  const [loading,setLoading] =useState(false);
-  const [scroll, setScroll] = React.useState('paper');
+
 
   const [profileupload, setProfileupload] = useState('');
   const [profileinfo, setProfileinfo] = useState([]);

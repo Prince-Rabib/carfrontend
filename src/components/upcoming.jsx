@@ -1,9 +1,7 @@
 import React,{useState, useEffect} from 'react'
-import { makeStyles, Grid,Paper, Avatar, TextField, Button, Typography,Link, responsiveFontSizes } from '@material-ui/core'
-
+import { makeStyles, Grid,Paper, Button } from '@material-ui/core'
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
-import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import Table from '@material-ui/core/Table';
@@ -12,7 +10,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Select from '@material-ui/core/Select';
 import {host} from '../host';
 
 function Alert(props) {
@@ -59,8 +56,6 @@ const useStyles = makeStyles((theme) =>({
 
 const Tmdb =()=>{
      const [check,setCheck] =useState(false);
-     const [date,setdate] = useState("");    
-     const [mechanic, setmechanic] = useState("");
      const [rows,Setrows]= useState([]);
      const [open,setOpen] =useState({
         status:false,

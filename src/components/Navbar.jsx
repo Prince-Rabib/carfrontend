@@ -1,18 +1,15 @@
 import React, { useEffect } from 'react';
-import { makeStyles, Toolbar,AppBar, Typography,InputBase,alpha,Badge,Avatar } from "@material-ui/core";
+import { makeStyles, Toolbar,AppBar, Typography,alpha,Badge } from "@material-ui/core";
 import { useState } from "react";
-import { Search, Mail, Notifications,Cancel } from "@material-ui/icons";
+import { Search } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import SettingsIcon from '@material-ui/icons/Settings';
 import Logout from './navigation/Logout';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import image from '../shownow.png';
 import {host} from '../host';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
-import MovieFilterIcon from '@material-ui/icons/MovieFilter';
-import AllInboxIcon from '@material-ui/icons/AllInbox';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 import FindInPageIcon from '@material-ui/icons/FindInPage';
 import LocalCarWashIcon from '@material-ui/icons/LocalCarWash';
@@ -52,7 +49,6 @@ const useStyles = makeStyles((theme) =>({
               backgroundColor: alpha(theme.palette.common.white, 0.25),
             },
             width: "50%",
-            borderRadius: theme.shape.borderRadius,
             [theme.breakpoints.down("sm")]:{
                 display: (props) => (props.open ? "flex": "none"),
             },

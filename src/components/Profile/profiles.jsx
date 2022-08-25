@@ -1,6 +1,5 @@
 import React,{useEffect,useState} from 'react'
-import Post from "../post";
-import { Card,Avatar, Container, makeStyles,CardActions, CardActionArea, CardMedia, CardContent, Typography,Button,Grid } from "@material-ui/core";
+import { Card,Avatar, makeStyles, CardActionArea, CardMedia, CardContent, Typography,Button,Grid } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
@@ -9,25 +8,15 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import { green } from '@material-ui/core/colors';
-import ImageIcon from '@material-ui/icons/Image';
-import WorkIcon from '@material-ui/icons/Work';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
 import WatchList from './watchList';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
-import { deepOrange, deepPurple } from '@material-ui/core/colors';
+import { deepPurple } from '@material-ui/core/colors';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import MovieFilterIcon from '@material-ui/icons/MovieFilter';
 import PublicIcon from '@material-ui/icons/Public';
 import TheatersIcon from '@material-ui/icons/Theaters';
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Cover from './cover';
 import {host} from '../../host'
 

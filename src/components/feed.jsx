@@ -1,6 +1,6 @@
 import { Container, makeStyles,Grid } from "@material-ui/core";
 import Post from "./post";
-import { Tmdb_post } from "./tmdb_post";
+
 
 const useStyles = makeStyles((theme) =>({
     container:{

@@ -2,13 +2,9 @@ import { Grid, makeStyles } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import Feed from "../components/feed";
 import Leftbar from "../components/Leftbar";
-import Navbar from "../components/Navbar";
-import Rightbar from "../components/Rightbar";
-import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-import { Tmdb_post } from "../components/tmdb_post";
 import MediaRight from '../components/mediaRight'
-import axios from 'axios';
+
 
 const useStyles = makeStyles((theme) =>({
       right:{

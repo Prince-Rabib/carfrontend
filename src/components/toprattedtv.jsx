@@ -1,15 +1,8 @@
 import { useState,useEffect } from "react";
 import axios from "axios";
-import { Card, Container, makeStyles,CardActions, CardActionArea, CardMedia, CardContent, Typography,Button,Grid } from "@material-ui/core";
+import { Card, makeStyles, CardActionArea, CardMedia, CardContent, Typography,Grid } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import Paginate  from "./pagination/Paginate";
-import IconButton from '@material-ui/core/IconButton';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
-import {host} from '../host';
 const useStyles = makeStyles((theme) =>({
     container:{
         marginBottom:theme.spacing(2),

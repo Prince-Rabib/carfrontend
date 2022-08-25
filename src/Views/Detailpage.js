@@ -1,10 +1,5 @@
 import { Grid, makeStyles } from "@material-ui/core";
-import { Add } from "@material-ui/icons";
-import Feed from "../components/feed";
 import Leftbar from "../components/Leftbar";
-import Navbar from "../components/Navbar";
-import Rightbar from "../components/Rightbar";
-import { Link } from "react-router-dom";
 import Details from "../components/Details";
 import MediaRight from "../components/mediaRight";
 

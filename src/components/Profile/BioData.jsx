@@ -1,19 +1,12 @@
-import React,{useState,useEffect,useRef, useContext } from 'react'
-
+import React,{useState,useEffect,useRef} from 'react'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles,Grid,Paper, Avatar, TextField, Button, Typography,Link } from '@material-ui/core'
 import { useHistory,useLocation } from "react-router-dom";
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 import axios from 'axios';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import Select from '@material-ui/core/Select';
 import BuildIcon from '@material-ui/icons/Build';
-import { Phone } from '@material-ui/icons';
 import {host} from '../../host';
 
 const useStyles = makeStyles((theme) =>({

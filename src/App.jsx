@@ -8,13 +8,10 @@ import Home from "./Views/Home";
 import Trending from "./Views/Trending";
 import Search from "./Views/Search";
 import Databasesearch from "./Views/Databasesearch";
-import Landing from "./components/layout/Landing";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-import store from "./components/redux/store";
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
-import {Provider} from 'react-redux'
 import { useEffect,useState } from "react";
 import ProtectedRoute from "./ProtectedRoute";
 import Admin from "./components/admin/Admin";
