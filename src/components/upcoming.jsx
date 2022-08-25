@@ -81,9 +81,9 @@ const Tmdb =()=>{
       return { name, calories, fat, carbs, protein };
        }
    
-    useEffect(async() => {
-      
-    let config = {
+     const  pullingData = async() => {
+
+      let config = {
         headers:{
             "content-Type":"application/json"
         }
@@ -96,19 +96,30 @@ const Tmdb =()=>{
             }
         }
         const auth = await axios.get(host+"/api/auth",config);
-        const data = await axios.post(host+"/api/posts/mypost",{
+
+        console.log(auth.data._id);
+
+        const data = await axios.post(host+"/api/posts/mypost/status",{
             'id':auth.data._id
         },config);
         if(data.data){
             Setrows(data.data);
+            console.log("profile data "+data.data)
         }
  
     }   catch (error) {
      
-        history.push('/adminpost')
+        history.push('/login')
     }
   
-   },[check])
+
+     }
+    
+    useEffect(() => {
+      
+      pullingData();
+  
+   },[])
 
     const classes = useStyles();
 
