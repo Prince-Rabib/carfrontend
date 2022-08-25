@@ -110,6 +110,7 @@ const useStyles = makeStyles((theme) =>({
       marginTop:theme.spacing(5)
   },
   profileBox:{
+      marginTop:theme.spacing(7.2),
       width:500,
   },
     propic:{
@@ -118,15 +119,18 @@ const useStyles = makeStyles((theme) =>({
     },
 
   biodataname:{
-      marginBottom:theme.spacing(2)
+      marginBottom:theme.spacing(2),
+
   },
   buttonmargin:theme.spacing(1),
   texting:{
     textAlign: "left",
     marginLeft:theme.spacing(2)
   },
-
-     
+  profileset:{
+    display:'flex',
+    width:"100%"
+  }
 }))
 export default function Profiles() {
 
@@ -347,7 +351,7 @@ export default function Profiles() {
                         component="img"
                         alt="Pick your Movie/Tv Show"
                         height="400"
-                        width ="2"
+                        width ="100%"
                         image={profileData.coverimage}                      
                         />
                      </CardActionArea>)
@@ -381,11 +385,15 @@ export default function Profiles() {
         <>
             <div>
             <Card className={classes.container}>
+                <div className={classes.profileset}>
                 <CardActionArea className={classes.profileBox} >
                 {propic}
                   {(profileData.length == 0)?<h1> </h1>: <Typography className={classes.biodataname} variant="h4" style={{textAlign:"center"}}>{profileData.user.name}</Typography> }                    
-                </CardActionArea>              
-                {Nocover}
+                </CardActionArea > 
+                <CardActionArea >
+                 {Nocover }
+                 </CardActionArea>             
+                 </div>
             </Card>
             {cover}
             </div>
