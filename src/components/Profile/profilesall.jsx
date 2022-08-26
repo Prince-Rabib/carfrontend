@@ -48,10 +48,12 @@ const labels = {
 
 const useStyles = makeStyles((theme) =>({
     root: {
+    marginTop:theme.spacing(4),
     width: '100%',
     maxWidth: 800,
     backgroundColor: theme.palette.background.paper,
     display:'flex',
+    flexDirection:'column',
     marginLeft:theme.spacing(5),
     [theme.breakpoints.down("xs")]:{
      
@@ -60,7 +62,6 @@ const useStyles = makeStyles((theme) =>({
 
       root2: {
     width: '100%',
-    maxWidth: 1050,
     backgroundColor: theme.palette.background.paper,
     display:'flex',
     justifyContent:'space-between',
@@ -71,7 +72,6 @@ const useStyles = makeStyles((theme) =>({
   },
     container:{
         marginBottom:theme.spacing(5),
-        marginTop:theme.spacing(2),
         height:'100%',
         display:'flex',    
      },
@@ -101,7 +101,8 @@ const useStyles = makeStyles((theme) =>({
         marginTop:theme.spacing(5),
      },
      numberoflines:{
-          WebkitLineClamp:1
+        display:'flex',
+        justifyContent:'left'
      },
        purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
@@ -120,14 +121,29 @@ const useStyles = makeStyles((theme) =>({
       marginTop:theme.spacing(5)
   },
   profileBox:{
-      width:500
+      marginTop:theme.spacing(7.2),
+      width:500,
   },
+    propic:{
+        marginTop:theme.spacing(7),
+        
+    },
+
   biodataname:{
-      marginBottom:theme.spacing(2)
+      marginBottom:theme.spacing(2),
+
   },
-  buttonmargin:theme.spacing(1)
-     
+  buttonmargin:theme.spacing(1),
+  texting:{
+    textAlign: "left",
+    marginLeft:theme.spacing(2)
+  },
+  profileset:{
+    display:'flex',
+    width:"100%"
+  }
 }))
+
 export default function Profiles() {
 
     const [profileData,SetProfileData] = useState([]);
@@ -274,21 +290,20 @@ export default function Profiles() {
                         return ( <Grid item md={4} xs={12} sm={6} key={result._id}>
                         <Card className={classes.containerNEW} >
                             
-                            <CardActionArea>
+                        <CardActionArea>
                                 <CardMedia className={classes.Media}
-                                height="50"
-                                width ="200"
+                                height="200"
+                                width ="50"
                                 image={result.image}
                                 title = {result.title}
                                 />                       
-                            <CardContent className={classes.numberoflines}>
-                                <Typography gutterBottom variant="h5">hi</Typography>
-                                
-                            </CardContent>              
+          
                             </CardActionArea>
 
                             <CardActionArea className={classes.ratting}>
                             <div className={classes.root}>
+                            <Typography  gutterBottom variant="h5" className={classes.texting} >{result.title}</Typography>
+                                <CardContent className={classes.numberoflines}>     
                                 <Rating
                                 name="hover-feedback"
                                 value={result.ratting}
@@ -296,6 +311,7 @@ export default function Profiles() {
                                 />
                                 {result.ratting !== null && <Box ml={2}>{labels[hover !== -1 ? hover : result.ratting]}</Box>}
                                 <Avatar className={classes.purple}>{result.ratting}</Avatar>
+                            </CardContent>    
                             </div> 
                             
                                      
