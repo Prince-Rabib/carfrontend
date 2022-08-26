@@ -422,7 +422,7 @@ export default function Profiles() {
                     <TheatersIcon color="primary"/>
                 </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Favourite Movie/TV " secondary={profileData.address} />
+                <ListItemText primary="Address" secondary={profileData.address} />
             </ListItem>
             <ListItem>
                 <ListItemAvatar>
@@ -430,7 +430,7 @@ export default function Profiles() {
                     <PublicIcon color="primary"/>
             </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Country" secondary={profileData.phone} />
+                <ListItemText primary="Contact" secondary={profileData.phone} />
             </ListItem>
                     <ListItem>
                 <ListItemAvatar>
@@ -438,7 +438,7 @@ export default function Profiles() {
                     <PermContactCalendarIcon color="primary"/>
                 </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Contact" secondary={profileData.status} />
+                <ListItemText primary="Country" secondary={profileData.status} />
             </ListItem>
             </List>
             </div>
