@@ -414,7 +414,7 @@ export default function Profiles() {
                     <MovieFilterIcon color="primary"/>
                 </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Favourite Genre" secondary={profileData.bio} />
+                <ListItemText primary="Favourite Car Brand" secondary={profileData.bio} />
             </ListItem>
             <ListItem>
                 <ListItemAvatar>
