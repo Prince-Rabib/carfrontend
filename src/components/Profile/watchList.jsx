@@ -332,8 +332,7 @@ const WatchList = () => {
                     
                      />                       
                   <CardContent className={classes.numberoflines}>
-                      <Typography gutterBottom variant="h5">check</Typography>
-                      
+                                
                   </CardContent> 
          
                 </CardActionArea>

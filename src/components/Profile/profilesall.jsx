@@ -446,7 +446,7 @@ export default function Profiles() {
                 {watchList}
             </div>
             <div>
-                <Button   variant="contained" color="primary" className={classes.watchlist}>WatchList</Button>
+                <Button   variant="contained" color="primary" className={classes.watchlist}>Favourite Cars</Button>
             </div>
             {console.log(profileData.watchlist)}
             {content}
