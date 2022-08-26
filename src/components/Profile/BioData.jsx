@@ -184,28 +184,17 @@ const BioData = () => {
                    helperText={fieldError.name}
                    className={classes.password}
                    id="outlined-password-input"
-                   label="Favourite Movie/Tv Show"
+                   label="Address"
                    type="text"
                    autoComplete="current-password"
                    variant="outlined"
                    onChange={(e)=>setAddress(e.target.value)}
                    fullWidth
                   />
-                     
-                   <TextField
-                  
-                   helperText={fieldError.name}
-                   className={classes.password}
-                   id="outlined-password-input"
-                   label="Country"
-                   type="text"
-                   autoComplete="current-password"
-                   variant="outlined"
-                   onChange={(e)=>setPhone(e.target.value)}
-                   fullWidth
-                  /> 
 
-                   <TextField
+
+
+                                     <TextField
                   
                    helperText={fieldError.name}
                    className={classes.password}
@@ -216,7 +205,22 @@ const BioData = () => {
                    variant="outlined"
                    onChange={(e)=>setStatus(e.target.value)}
                    fullWidth
-                  />                                 
+                  />       
+                     
+                   <TextField
+                  
+                  helperText={fieldError.name}
+                  className={classes.password}
+                  id="outlined-password-input"
+                  label="Country"
+                  type="text"
+                  autoComplete="current-password"
+                  variant="outlined"
+                  onChange={(e)=>setPhone(e.target.value)}
+                  fullWidth
+                 /> 
+
+                          
     
                 <Button className={classes.submitButton}color="primary" type='submit'  variant="contained"  onClick={()=> loginHandler()} fullWidth>Submit</Button>
             </Paper>
