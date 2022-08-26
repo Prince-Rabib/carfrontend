@@ -385,7 +385,7 @@ const auth = await axios.get(host+"/api/auth",config);
 
 
 if(auth){
-  const data = await axios.post(host+"/api/posts/mypost",{
+const data = await axios.post(host+"/api/posts/mypost",{
       'id':auth.data._id
   },config);
   setName(auth.data.name);
