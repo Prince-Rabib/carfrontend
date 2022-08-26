@@ -151,7 +151,7 @@ const Search = () => {
         
             }   catch (error) {
             
-                history.push('/search')
+                console.log("working")
             }
           
          }
