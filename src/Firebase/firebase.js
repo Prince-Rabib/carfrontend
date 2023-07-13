@@ -7,23 +7,17 @@ import { getStorage } from 'firebase/storage'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyC5EFkIulaLwaKEIFlUKI4y9gioxqksUdM",
-  authDomain: "rent-space-f74e9.firebaseapp.com",
-  projectId: "rent-space-f74e9",
-  storageBucket: "rent-space-f74e9.appspot.com",
-  messagingSenderId: "344906644462",
-  appId: "1:344906644462:web:c7d97e7157ed9d0fca6cff"
+  apiKey: "AIzaSyDUZxkMV6GH9bydn-9_Qa3ao2NI6dP0SVM",
+  authDomain: "carreselling.firebaseapp.com",
+  projectId: "carreselling",
+  storageBucket: "carreselling.appspot.com",
+  messagingSenderId: "568582939130",
+  appId: "1:568582939130:web:f7c4f65e666bb4159e0443"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
 
 export const storage = getStorage(app);
 
-const provider = new GoogleAuthProvider();
-
-export const signInWithGoogle = () => {
-  return signInWithPopup(auth, provider);
-};
